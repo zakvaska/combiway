@@ -25,6 +25,7 @@ body {
     position: relative;
     /* height: 7000px;   */
     /* overflow: hidden;   */
+    color: rgba(255, 255, 255, .75);
 }
 
 a {
@@ -44,11 +45,19 @@ a {
 .max-vw-10 {
     max-width: 10vw;
 }
-.max-vw-20 {
-    max-width: 20vw;
+
+.max-vmax-30 {
+    max-width: 30vmax;
 }
+
 .ms-n8vw {
     margin-left: -8vw;
+}
+
+@media (min-width: 1200px) {
+    .max-vw-xl-20 {
+        max-width: 20vw;
+    }
 }
 
 #scroll-spy-menu {
@@ -172,14 +181,14 @@ a {
     position: absolute;
     background-image: url('../images/COMBIWAY-17\ 5.png'); 
     background-size: cover;
-    width: 36vw;
-    height: 38vw;    
-    
+    width: 36vmax;
+    height: 38vmax;    
+    top: 25rem;
     left: 50%;
     transform: translateX(-50%);
 }
 
-.background-wrapper {
+#background-wrapper {
     position: absolute;    
     z-index: -10;
     width: 100%;
@@ -191,7 +200,7 @@ a {
     ,url('../images/COMBIWAY-10.png');
     background-repeat: no-repeat, no-repeat;
     background-size: cover, contain;
-    background-position-y: center, bottom;        
+    background-position-y: center, 40rem;        
 }
 
 #second-background {
@@ -228,28 +237,61 @@ section {
 }
 
 section:nth-of-type(1) {
-    /* background-image: url('../images/COMBIWAY-11.png')
-    ,url('../images/COMBIWAY-10.png');
-    background-repeat: no-repeat, no-repeat;
-    background-size: cover, contain;
-    background-position-y: center, bottom; */
+    background-image: url('../images/COMBIWAY-17\ 5.png'),
+    url('../images/COMBIWAY-11.png'),
+    url('../images/COMBIWAY-10.png');
+    background-repeat: no-repeat;
+    background-size: 70%, cover, 90%;
+    background-position-x: right, 0, right;
+    background-position-y: 70%, center, 90%;
     position: relative;
     /* z-index: -10; */
+}
+
+.token {
+    /* position: absolute;  */
+    background-image: url('../images/COMBIWAY-17\ 5.png');
+    background-size: contain;
+    /* width: 36vmax; */
+    height: 18vmax;
+    /* top: 25rem; */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+    /* z-index: -1; */
+    background-repeat: no-repeat;
+    background-position-x: right;
 }
 
 .logo {
     background-image: url('../images/Лого.png');
     /* background-position-x: -4vw; */
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     /* width: 295px;
     height: 115px; */
 
-    width: 16vw;
+    
+}
+
+.main-logo {
+    width: 18vmax;
     height: 13vh;
-    background-position-x: 50%;
+    /* background-position-x: 50%; */
     position: relative;
-    left: -4vw;
+    left: -5vmax;
+}
+
+.secondary-logo {
+    height: 13vh; 
+    background-size: 75%;
+    background-position: center;
+}
+
+.bus {
+    background-image: url('../images/COMBIWAY-22\ 2.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 18vh;
 }
 
 .w-30 {
@@ -271,6 +313,7 @@ button {
     background-color: transparent;
     /* width: 10vw; */
     width: 12em;
+    font-size: 0.7em;
 }
 /* p {
     position: relative;
@@ -285,28 +328,31 @@ li::marker {
 
 /* section:nth-of-type(2) > div.container { */
 /* #bg-container { */
-section:nth-of-type(2) {
-    background-image: url('../images/COMBIWAY-331.png'),
-    url('../images/COMBIWAY-33.png'),
-    url('../images/Polygon\ 3.png'),
-    url('../images/Polygon\ 2.png');    
-    background-repeat: no-repeat; 
-    width: 100%;
-    height: 100%;
-    /* background-size: 30%, 30%, 30%, 40%; */
-    /* 1200px */
-    /* background-size: 10%, 32%, 35%, 33%; */
-    background-size: 9vw, 30vw, 30vw, 30vw;
-    /* background-position: 51% 56%,
-    bottom 10% left 10%,
-    52% center,
-    center;     */
-    background-position: 50% 56%,
-    bottom 20% right 85%,
-    52% center,
-    center;
-    /* position: absolute; */
-}
+@media (min-width: 1200px) {
+    section:nth-of-type(2) {
+        background-image: url('../images/COMBIWAY-331.png'),
+        url('../images/COMBIWAY-33.png'),
+        url('../images/Polygon\ 3.png'),
+        url('../images/Polygon\ 2.png');    
+        background-repeat: no-repeat; 
+        width: 100%;
+        height: 100%;
+        /* background-size: 30%, 30%, 30%, 40%; */
+        /* 1200px */
+        /* background-size: 10%, 32%, 35%, 33%; */
+        background-size: 9vw, 30vw, 30vw, 30vw;
+        /* background-position: 51% 56%,
+        bottom 10% left 10%,
+        52% center,
+        center;     */
+        background-position: 50% 56%,
+        bottom 20% right 85%,
+        52% center,
+        center;
+        /* position: absolute; */
+    }
+}    
+
 
 #bus {    
     position: absolute;
@@ -420,6 +466,15 @@ section:nth-of-type(2) {
     width: 12vw;
     height: 13vw;
     background-size: cover;
+}
+
+.bg-money {
+    background-image: url('../images/money_038\ 3.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position-x: center;
+    width: 100%;
+    height: 100%;
 }
 
 .description {
@@ -591,18 +646,45 @@ section:nth-of-type(2) {
     }
 }
 
-section:nth-of-type(3) {
-    background-image: url('../images/COMBIWAY-23\ 1.png');
-    background-repeat: no-repeat;
-    background-position: right 35% top 83%;
+
+@media (min-width: 1200px) {
+    section:nth-of-type(3) {
+        background-image: url('../images/COMBIWAY-23\ 1.png');
+        background-position: right 35% top 83%;
+        background-size: auto;        
+    }
 }
 
+section:nth-of-type(3) {
+    background-image: url('../images/COMBIWAY-17\ 5.png'),
+    url('../images/COMBIWAY-23\ 1.png');
+    background-repeat: no-repeat;
+    background-size: 25%, 45%;
+    background-position: 70% 70%, 90% bottom;
+}
+
+section:nth-of-type(4) {
+    background-image: url('../images/COMBIWAY-26.png');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+}
+
+@media (min-width: 1200px) {
+    section:nth-of-type(5) {
+        /* cursor: progress; */
+        /* background-color: #44B1ED; */
+        background: 
+        linear-gradient(#1a1e34, #7c1dc9 30%, #2bf4fe 50%, transparent 50%),
+        linear-gradient(to bottom left, #2bf4fe 50%, #7c1dc9);
+        overflow: hidden;
+    }
+}
 section:nth-of-type(5) {
     /* cursor: progress; */
     /* background-color: #44B1ED; */
-    background: 
-    linear-gradient(#1a1e34, #7c1dc9 30%, #2bf4fe 50%, transparent 50%),
-    linear-gradient(to bottom left, #2bf4fe 50%, #7c1dc9);
+    background:
+    linear-gradient(#1a1e34 45%, #7c1dc9 60%, #2bf4fe 75%, transparent 75%), 
+    linear-gradient(to bottom left, #2bf4fe 50%, #7c1dc9);    
     overflow: hidden;
 }
 
@@ -613,6 +695,13 @@ section:nth-of-type(5) {
     right: 0;
     bottom: 0;
     z-index: 1;
+}
+
+section:nth-of-type(5) > .token {
+    position: absolute;
+    top: 55%;
+    right: 0;
+    width: 36vmax;
 }
 
 #river-wrapper {
@@ -743,22 +832,60 @@ section:nth-of-type(5) {
     font-size: 5em;
 }
 
+@media (min-width: 1200px) {
+    #left-mountain {
+        background-color: #1b1f36;
+        border-bottom: 1px solid #2b6c87;
+        width: 60vw;
+        height: 15vw;
+        clip-path: polygon(0px 0px, 100% 100%, 0px 100%);
+        position: absolute;
+        bottom: 50%;
+        background: linear-gradient(#2b3555, #1a1e35);
+    }
+}
+
 #left-mountain {
     background-color: #1b1f36;
     border-bottom: 1px solid #2b6c87;
-    width: 60vw;
     height: 15vw;
     clip-path: polygon(0px 0px, 100% 100%, 0px 100%);
     position: absolute;
-    bottom: 50%;
     background: linear-gradient(#2b3555, #1a1e35);
+    width: 67%;
+    bottom: 25%;
+}
+
+
+@media (min-width: 1200px) {
+    #land {
+        font-size: 1em;
+        position: absolute;
+        height: 50%;
+        bottom: 0;
+        width: 100%;    
+        /* clip-path: polygon(0px 0px, calc(60% + 10px) 0px, 0px 80%, 
+                            0px 100%, 5% 100%,
+                            25% 70%,
+                            62% 0px, 
+                            100% 0px, 100% 100%, 0px 100%); */
+        clip-path: polygon(0px 0px, calc(60% + 10px) 0px, 0px 80%,
+                           0px 100%, 5% 100%,
+                           24% 66.5%, 34.25% 66.5%, 35% 65%, 25% 65%,
+                           37% 44%, 44% 44%, 44.5% 43%, 37.5% 43%,
+                           46.75% 27%, 52% 27%, 52.25% 26.5%, 47% 26.5%,
+                           53.75% 15%, 57.5% 15%, 57.75% 14.5%, 54% 14.5%,
+                           59.25% 5%, 61.5% 5%, 61.75% 4.5%, 59.5% 4.5%,
+                           62% 0px, 100% 0px, 100% 100%, 0px 100%);
+        background: linear-gradient(to top, #1a1e35 20%, #2b3555);
+        transform: none;
+    }
 }
 
 #land {
-    position: absolute;
-    height: 50%;
-    bottom: 0;
-    width: 100%;    
+    font-size: .3em;
+    position: absolute; 
+    bottom: 0;   
     /* clip-path: polygon(0px 0px, calc(60% + 10px) 0px, 0px 80%, 
                         0px 100%, 5% 100%,
                         25% 70%,
@@ -772,81 +899,163 @@ section:nth-of-type(5) {
                        53.75% 15%, 57.5% 15%, 57.75% 14.5%, 54% 14.5%,
                        59.25% 5%, 61.5% 5%, 61.75% 4.5%, 59.5% 4.5%,
                        62% 0px, 100% 0px, 100% 100%, 0px 100%);
-    background: linear-gradient(to top, #1a1e35 20%, #2b3555);
+    background:
+    linear-gradient(to top, #1a1e35 20%, #2b3555);
     /* background: radial-gradient(ellipse farthest-side at 50% 50%, #2b3555, #1a1e35); */
+
+    width: 160%;
+    height: 25%;
+    transform: translateX(-20%);
 }
 
+
+@media (min-width: 1200px) {
+    #front-mountains {
+        position: absolute;
+        /* border: 1px solid red; */
+        left: 48%;
+        bottom: 0;
+        width: 45%;
+        height: 150%;
+        background-color: #1a1e35;
+        clip-path: polygon(25% 0px, 100% 0px, 100% 100%, 
+        0px 100%, 0px 61%, 25% 55%);
+        transform-origin: bottom left;
+        transform: rotateZ(38deg);
+        background: linear-gradient(322deg, #1a1e35 50%, #2b3555);
+    }
+}
 #front-mountains {
     position: absolute;
     /* border: 1px solid red; */
-    left: 48%;
-    bottom: 0;
-    width: 45%;
+    left: 0;
+    bottom: -22%;
+    width: 54%;
     height: 150%;
     background-color: #1a1e35;
-    clip-path: polygon(25% 0px, 100% 0px, 100% 100%, 
-    0px 100%, 0px 61%, 25% 55%);
+    clip-path: polygon(50% 0px, 100% 0px, 100% 100%, 
+    0px 100%, 0px 61%, 50% 58%);
     transform-origin: bottom left;
     transform: rotateZ(38deg);
     background: linear-gradient(322deg, #1a1e35 50%, #2b3555);
 }
 
+@media (min-width: 1200px) {
+    #first-front-mountain {
+        position: absolute;
+        width: 25%;
+        height: 6%;
+        bottom: 39%;
+        /* background-color: blue; */
+        /* border: 1px solid red; */
+        background: linear-gradient(#1a1e35, #2b3555);
+    }
+}
 #first-front-mountain {
     position: absolute;
-    width: 25%;
-    height: 6%;
+    width: 50%;
+    height: 3%;
     bottom: 39%;
     /* background-color: blue; */
     /* border: 1px solid red; */
     background: linear-gradient(#1a1e35, #2b3555);
 }
 
+@media (min-width: 1200px) {
+    section:nth-of-type(6) {
+        background-image: url('../images/COMBIWAY-27.png');
+        background-repeat: no-repeat;
+        /* background-size: cover; */    
+    }
+}
 section:nth-of-type(6) {
     background-image: url('../images/COMBIWAY-27.png');
     background-repeat: no-repeat;
     /* background-size: cover; */
+    background-size: 125%;
+    background-position: center 90%;
 }
 
+@media (min-width: 1200px) {
+    section:nth-of-type(7) {
+        background-image: url('../images/smartphoneOnTheWorld.png');
+        background-repeat: no-repeat;
+        background-position: bottom;        
+    }
+}
 section:nth-of-type(7) {
     background-image: url('../images/smartphoneOnTheWorld.png');
     background-repeat: no-repeat;
     background-position: bottom;
+    /* background-size: contain; */
+    background-size: 160%;
+    background-position: 70% 70%
 }
 
+@media (min-width: 1200px) {
+    .comment {
+        position: absolute;    
+        /* border-radius: 10px; */
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        /* border-bottom-right-radius: 10px; */
+        border-bottom-left-radius: 10px;
+        background-color: #94969e;
+        /* #94969e7d half-opacity */
+        padding-right: 5em;
+        padding-left: 5em;
+    }
+    .comment::before {
+        content: '';
+        position: absolute;    
+        left: 10%; 
+        background-image: url('../images/Group.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 18px;
+        height: 18px;    
+    }
+
+    .comment::after {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-color: #94969e;
+        right: 0;
+        bottom: 0;
+        transform: rotateZ(315deg);
+        transform-origin: right bottom;
+        clip-path: polygon(0px 0px, 100% 100%, 0px 100%);
+    }
+
+    section:nth-of-type(7) > div.comment:nth-of-type(1) {
+        top: 55%;
+        left: 32%;
+    }
+    
+    section:nth-of-type(7) > div.comment:nth-of-type(2) {
+        top: 45%;
+        left: 45%;    
+    }
+    
+    section:nth-of-type(7) > div.comment:nth-of-type(3) {
+        top: 35%;
+        left: 56%;
+    }
+}
 .comment {
     position: absolute;    
     /* border-radius: 10px; */
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     /* border-bottom-right-radius: 10px; */
-    border-bottom-left-radius: 10px;
+    border-bottom-left-radius: 5px;
     background-color: #94969e;
     /* #94969e7d half-opacity */
     padding-right: 5em;
     padding-left: 5em;
 }
-
-section:nth-of-type(7) > div.comment:nth-of-type(1) {
-    top: 55%;
-    left: 32%;
-}
-
-section:nth-of-type(7) > div.comment:nth-of-type(2) {
-    top: 45%;
-    left: 45%;    
-}
-section:nth-of-type(7) > div.comment:nth-of-type(2),
-section:nth-of-type(7) > div.comment:nth-of-type(2)::after,
-section:nth-of-type(7) > div.comment:nth-of-type(3),
-section:nth-of-type(7) > div.comment:nth-of-type(3)::after {
-    background-color: rgba(148, 150, 158, .5);
-}
-
-section:nth-of-type(7) > div.comment:nth-of-type(3) {
-    top: 35%;
-    left: 56%;
-}
-
 .comment::before {
     content: '';
     position: absolute;    
@@ -854,15 +1063,17 @@ section:nth-of-type(7) > div.comment:nth-of-type(3) {
     background-image: url('../images/Group.png');
     background-repeat: no-repeat;
     background-size: cover;
-    width: 18px;
-    height: 18px;    
+    width: 10px;
+    height: 10px; 
+    top: 50%;
+    transform: translateY(-50%);   
 }
 
 .comment::after {
     content: '';
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     background-color: #94969e;
     right: 0;
     bottom: 0;
@@ -870,6 +1081,30 @@ section:nth-of-type(7) > div.comment:nth-of-type(3) {
     transform-origin: right bottom;
     clip-path: polygon(0px 0px, 100% 100%, 0px 100%);
 }
+
+section:nth-of-type(7) > div.comment:nth-of-type(2),
+section:nth-of-type(7) > div.comment:nth-of-type(2)::after,
+section:nth-of-type(7) > div.comment:nth-of-type(3),
+section:nth-of-type(7) > div.comment:nth-of-type(3)::after {
+    background-color: rgba(148, 150, 158, .5);
+}
+
+section:nth-of-type(7) > div.comment:nth-of-type(1) {
+    top: 57%;
+    left: 3%;
+}
+
+section:nth-of-type(7) > div.comment:nth-of-type(2) {
+    top: 52%;
+    left: 16%;    
+}
+
+
+section:nth-of-type(7) > div.comment:nth-of-type(3) {
+    top: 47%;
+    left: 30%;
+}
+
 
 section:last-of-type {
     background-image: url('../images/lastBackground.png');

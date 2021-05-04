@@ -261,9 +261,12 @@ const manageScrollPos = (initialLoad, animateIconSwitch) => {
 	}
 };
 
-$(document).on('scroll', function() {		
-	manageScrollPos(false);
-});
+if ($(window).width() > 1200) {
+	$(document).on('scroll', function() {		
+		manageScrollPos(false);
+	});
+}
+
 
 $menuItems.on('click', function() {
 	
@@ -285,5 +288,5 @@ $menuItems.on('mouseleave', function() {
 });
 
 $(function() {
-	manageScrollPos(true);			
+	if ($(window).width() > 1200) manageScrollPos(true);			
 }); 
