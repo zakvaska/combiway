@@ -259,13 +259,13 @@ a {
     height: 38vmax;   */
     width: 55vh;
     height: 60vh;
-    top: 25rem;
+    /* top: 25rem; */
     left: 50%;
     transform: translateX(-50%);
     
-    top: 118vh;
+    top: 14vh;
     /* bottom: -97vh; */
-    transform: translateX(-50%) scale(0.3);
+    /* transform: translateX(-50%) scale(0.3); */
     /* background-position: -2vmax -7vmax; */
     background-position: 0 -10vh;
     transform-origin: top;

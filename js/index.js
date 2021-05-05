@@ -288,5 +288,5 @@ $menuItems.on('mouseleave', function() {
 });
 
 $(function() {
-	if ($(window).width() > 1200) manageScrollPos(true);			
+	if ($(window).width() >= 1200) manageScrollPos(true);			
 }); 
