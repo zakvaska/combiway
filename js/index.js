@@ -47,10 +47,10 @@ $menuItems.each(function(index, item) {
 $token.data({
 	currentScale: 1,
 	scale0: 1,
-	top0: 0,
+	top0: '14vh',
 	left0: 666,
-	scale1: 0.3,
-	top1: '88vh',
+	scale1: 0.4,
+	top1: '115vh',
 	left1: 610
 })
 
