@@ -203,52 +203,121 @@ a {
     transform: rotateZ(-24deg);       
     filter: brightness(70%);
     background-repeat: no-repeat;
+    background-size: cover;
     cursor: pointer;
-    z-index: 1;
+    z-index: 1;        
+}
+
+.circle-menu-item::after {
+    content: '';
+    background-size: cover;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    /* transition: clip-path 500ms ease-in-out;     */
+    animation-duration: 500ms;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    will-change: clip-path;
+}
+.circle-menu-item:not(.active-in)::after {
+    clip-path: circle(0 at 0 50%);
+    /* clip-path: inset(0 0 100% 0); */
+    /* clip-path: inset(0 100% 0 0); */
+}
+
+.circle-menu-item.active-in::after {
+    /* clip-path: circle(100% at 50% 50%);
+    clip-path: inset(0 0 0 0); */
+    animation-name: in-circle-right;
+}
+
+.circle-menu-item.active-out::after {
+    /* clip-path: circle(0 at 100% 50%);
+    clip-path: inset(0 0 0 0); */
+    animation-name: out-circle-right;
+}
+
+@keyframes in-circle-right {
+    0% {
+        clip-path: circle(0 at 0 50%);
+    }
+    100% {
+        clip-path: circle(100% at 50% 50%);
+    }
+}
+@keyframes out-circle-right {
+    0% {
+        clip-path: circle(100% at 50% 50%);
+    }
+    100% {
+        clip-path: circle(0 at 100% 50%);
+    }
 }
 
 .circle-menu-item:nth-of-type(1) {
     top: 5%;
     right: 16vw;
-    background-image: url('../images/MenuIcons/COMBIWAY-41.png');
-    background-size: cover;
+    background-image: url('../images/MenuIcons/COMBIWAY-41.png');    
+}
+.circle-menu-item:nth-of-type(1)::after {
+    background-image: url('../images/MenuIcons/COMBIWAY-48.png');
 }
 .circle-menu-item:nth-of-type(2) {
     top: 18%;
     right: 13.5vw;
     background-image: url('../images/MenuIcons/COMBIWAY-42.png');
-    background-size: cover;    
 }
+.circle-menu-item:nth-of-type(2)::after {
+    background-image: url('../images/MenuIcons/COMBIWAY-49.png');
+}
+
 .circle-menu-item:nth-of-type(3) {
     top: 31%;
     right: 12vw;
     background-image: url('../images/MenuIcons/COMBIWAY-43.png');
-    background-size: cover;    
 }
+.circle-menu-item:nth-of-type(3)::after {
+    background-image: url('../images/MenuIcons/COMBIWAY-50.png');
+}
+
 .circle-menu-item:nth-of-type(4) {
     top: 45%;
     right: 11.5vw;
     background-image: url('../images/MenuIcons/COMBIWAY-44.png');
-    background-size: cover;    
 }
+.circle-menu-item:nth-of-type(4)::after {
+    background-image: url('../images/MenuIcons/COMBIWAY-51.png');
+}
+
 .circle-menu-item:nth-of-type(5) {
     bottom: 31%;
     right: 12vw;
-    background-image: url('../images/MenuIcons/COMBIWAY-45.png');
-    background-size: cover;    
+    background-image: url('../images/MenuIcons/COMBIWAY-45.png');   
 }
+.circle-menu-item:nth-of-type(5)::after {
+    background-image: url('../images/MenuIcons/COMBIWAY-52.png');
+}
+
 .circle-menu-item:nth-of-type(6) {
     bottom: 18%;
     right: 13.5vw;
-    background-image: url('../images/MenuIcons/COMBIWAY-46.png');
-    background-size: cover;    
+    background-image: url('../images/MenuIcons/COMBIWAY-46.png'); 
 }
+.circle-menu-item:nth-of-type(6)::after {
+    background-image: url('../images/MenuIcons/COMBIWAY-53.png');
+}
+
 .circle-menu-item:nth-of-type(7) {
     bottom: 5%;
     right: 16vw;
-    background-image: url('../images/MenuIcons/COMBIWAY-47.png');
-    background-size: cover;    
+    background-image: url('../images/MenuIcons/COMBIWAY-47.png');   
 }
+.circle-menu-item:nth-of-type(7)::after {
+    background-image: url('../images/MenuIcons/COMBIWAY-54.png');
+}
+
+
 
 #token {
     position: absolute;
@@ -430,14 +499,30 @@ button {
     border: 4px solid #A16EFF;
     box-shadow: 0px 4px 15px 0px #A16EFF7D;
     background-color: transparent;
-    /* width: 10vw; */
     width: 12em;
     font-size: 0.7em;
-}
-/* p {
     position: relative;
-    z-index: -2;
-} */
+}
+button::after {
+    content: 'купить Tickets';
+    color: #1a1e34;
+    position: absolute;
+    padding-top: .5rem;    
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* z-index: -1; */
+    /* clip-path: circle(0 at 0 0); */
+    clip-path: inset(0 0 100% 0);
+    background-color: #A16EFF;
+    transition: 500ms ease-in-out;
+}
+button:hover::after {
+    /* clip-path: circle(150% at 0 0); */
+    clip-path: inset(0 0 0 0);
+}
+
 li {
     filter: brightness(90%);
 }
@@ -874,6 +959,7 @@ section:nth-of-type(4) {
 @media (min-width: 992px) {
     section:nth-of-type(4) { 
         background-position: center;
+        background-size: contain;
     }
 }
 
