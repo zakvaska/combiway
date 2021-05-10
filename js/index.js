@@ -49,36 +49,13 @@ const managePageSwitch = (animate) => {
 	let $prevItem, $currentItem;
 	$prevItem = $menuItems.eq(prevPage);
 	
-	// $prevItem.data('status', 'inactive')
-	// .animate({
-	// 	'background-position-x': 100,
-	// 	'opacity': 0
-	// }, 500, function() {
-	// 	$(this).css({
-	// 		'background-position-x': -100,
-	// 		'background-image': $prevItem.data('inactiveImage')				
-	// 	}).animate({
-	// 		'background-position-x': 0,
-	// 		'opacity': 1
-	// 	}, 500);
-	// });
 	$currentItem = $menuItems.eq(currentPage);
 	if (animate) {
-		if ($prevItem.length > 0) $prevItem.data('status', 'inactive').data('activeImage').removeClass('active-in').addClass('active-out');		
-		$currentItem.data('status', 'active').data('activeImage').removeClass('active-out').addClass('active-in');
-		// $currentItem.data('status', 'active');
-		// .animate({
-		// 	'background-position-x': 100,
-		// 	'opacity': 0
-		// }, 500, function() {
-		// 	$(this).css({
-		// 		'background-position-x': -100,
-		// 		'background-image': $currentItem.data('activeImage')				
-		// 	}).animate({
-		// 		'background-position-x': 0,
-		// 		'opacity': 1
-		// 	}, 500);
-		// });		
+		if ($prevItem.length > 0) $prevItem.removeClass('active').data('status', 'inactive')
+								// .css('transform', $prevItem.css('transform').replace(' scale(1.2)', ''))
+								.data('activeImage').removeClass('active-in').addClass('active-out');		
+		// $currentItem.css('transform', $currentItem.css('transform').concat(' scale(1.2)'))
+		if ($currentItem.length > 0) $currentItem.addClass('active').data('status', 'active').data('activeImage').removeClass('active-out').addClass('active-in');
 	} else {
 		$currentItem.css('background-image', $currentItem.data('activeImage'));			
 	}
@@ -247,14 +224,14 @@ $(function() {
 particlesJS("particles-js", {
 	"particles": {
 	  "number": {
-		"value": 38,
+		"value": 50,
 		"density": {
 		  "enable": true,
 		  "value_area": 800
 		}
 	  },
 	  "color": {
-		"value": "#ffffff"
+		"value": "#355568"
 	  },
 	  "shape": {
 		"type": "circle",
@@ -294,13 +271,13 @@ particlesJS("particles-js", {
 	  "line_linked": {
 		"enable": true,
 		"distance": 150,
-		"color": "#ffffff",
+		"color": "#355568",
 		"opacity": 0.4,
 		"width": 1
 	  },
 	  "move": {
 		"enable": true,
-		"speed": 6,
+		"speed": 3,
 		"direction": "none",
 		"random": false,
 		"straight": false,
@@ -317,11 +294,11 @@ particlesJS("particles-js", {
 	  "detect_on": "canvas",
 	  "events": {
 		"onhover": {
-		  "enable": true,
+		  "enable": false,
 		  "mode": "grab"
 		},
 		"onclick": {
-		  "enable": true,
+		  "enable": false,
 		  "mode": "push"
 		},
 		"resize": true
