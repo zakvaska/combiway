@@ -13,11 +13,17 @@
     src: url('../fonts/OpenSans-ExtraBold.ttf') format('truetype');
 }
 
+::-webkit-scrollbar {
+    width: 0;
+}
+
 :root {
     --menu-inner-circle-radius: 92.5vh;
     --menu-outer-circle-radius: 112.5vh;
     --menu-inner-circle-right: 20vw;
     --menu-outer-circle-right: calc(var(--menu-inner-circle-right) - (var(--menu-outer-circle-radius) - var(--menu-inner-circle-radius)));
+    --menu-item-diameter: calc((var(--menu-inner-circle-right) - var(--menu-outer-circle-right)) / 2);
+    --menu-item-offset: calc(var(--menu-inner-circle-radius) + var(--menu-item-diameter) / 2);
 }
 
 body {
@@ -26,6 +32,11 @@ body {
     /* height: 7000px;   */
     /* overflow: hidden;   */
     color: rgba(255, 255, 255, .75);
+}
+
+canvas {
+    display: block;
+    vertical-align: bottom;
 }
 
 a {
@@ -136,18 +147,17 @@ a {
 #scroll-spy-menu {
     position: fixed;
     display: flex;
-    /* width: 30vw; */
-    /* height: 100%; */
+    width: 100vw;
+    height: 100vh;    
     top: 0;
-    bottom: 0;
+    /* bottom: 0; */
     right: 0;
-    /* left: 0; */
+    left: 0;
     z-index: 10;
-    transform: rotateZ(24deg);   
-    /* transform-origin: calc(-35vw + 17px); */
-    /* transform-origin: calc(var(--menu-inner-circle-radius) * (-1) - var(--menu-inner-circle-right)); */
-    transform-origin: calc((var(--menu-inner-circle-radius) + var(--menu-inner-circle-right)) * (-1));
-    
+    transform: rotateZ(24deg);
+    /* transform-origin: calc((var(--menu-inner-circle-radius) + var(--menu-inner-circle-right)) * (-1)); *//*for width = 0*/
+    transform-origin: calc(100vw - var(--menu-inner-circle-right) - var(--menu-inner-circle-radius));
+    pointer-events: none;
     opacity: 0;
 }
 @keyframes rotateCircle {
@@ -162,8 +172,9 @@ a {
     }
 }
 
-#scroll-spy-menu::before {
-    content: '';
+/* #scroll-spy-menu::before { */
+#inner-circle {    
+    /* content: ''; */
     position: absolute;    
     align-self: center;    
     right: var(--menu-inner-circle-right);
@@ -174,8 +185,9 @@ a {
     clip-path: polygon(75% 0px, 100% 0px, 100% 100%, 65% 100%);  
 }
 
-#scroll-spy-menu::after {
-    content: '';
+/* #scroll-spy-menu::after { */
+#outer-circle { 
+    /* content: ''; */
     position: absolute;
     align-self: center;    
     right: var(--menu-outer-circle-right);
@@ -195,6 +207,10 @@ a {
     height: 100px; */
     width: 11vh;
     height: 11vh;
+    width: var(--menu-item-diameter);
+    height: var(--menu-item-diameter);
+    /* width: 5vw;
+    height: 5vw; */
     display: flex;
     /* align-self: center;
     justify-self: center; */
@@ -205,11 +221,28 @@ a {
     background-repeat: no-repeat;
     background-size: cover;
     cursor: pointer;
-    z-index: 1;        
+    z-index: 1; 
+    pointer-events: auto; 
+    top: 50%;
+    left: 50%;  
+    margin-top: -5.5vh; 
+    /* transform-origin: -200vw;      */
 }
 
-.circle-menu-item::after {
-    content: '';
+.circle-menu-item > .inactive-img {
+    background-size: cover;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+}
+
+/* .circle-menu-item::after { */
+.circle-menu-item > .active-img {
+    /* content: ''; */
+    position: absolute;
+    z-index: 1;
     background-size: cover;
     border-radius: 50%;
     width: 100%;
@@ -220,19 +253,23 @@ a {
     animation-fill-mode: both;
     will-change: clip-path;
 }
-.circle-menu-item:not(.active-in)::after {
+/* .circle-menu-item:not(.active-in)::after { */
+.circle-menu-item > .active-img:not(.active-in) {
     clip-path: circle(0 at 0 50%);
+    /* clip-path: circle(0 at 50% 50%); */
     /* clip-path: inset(0 0 100% 0); */
     /* clip-path: inset(0 100% 0 0); */
 }
 
-.circle-menu-item.active-in::after {
+/* .circle-menu-item.active-in::after { */
+.circle-menu-item > .active-img.active-in {
     /* clip-path: circle(100% at 50% 50%);
     clip-path: inset(0 0 0 0); */
     animation-name: in-circle-right;
 }
 
-.circle-menu-item.active-out::after {
+/* .circle-menu-item.active-out::after { */
+.circle-menu-item > .active-img.active-out {
     /* clip-path: circle(0 at 100% 50%);
     clip-path: inset(0 0 0 0); */
     animation-name: out-circle-right;
@@ -241,79 +278,95 @@ a {
 @keyframes in-circle-right {
     0% {
         clip-path: circle(0 at 0 50%);
+        /* clip-path: inset(0 0 100% 0); */
+        /* clip-path: circle(0 at 50% 50%); */
     }
     100% {
         clip-path: circle(100% at 50% 50%);
+        /* clip-path: inset(0 0 0 0); */
+        /* clip-path: circle(100% at 50% 50%); */
     }
 }
 @keyframes out-circle-right {
     0% {
+        /* clip-path: inset(0 0 0 0); */
         clip-path: circle(100% at 50% 50%);
+        /* clip-path: circle(100% at 50% 50%); */
     }
     100% {
         clip-path: circle(0 at 100% 50%);
+        /* clip-path: inset(100% 0 0 0); */
+        /* clip-path: circle(0 at 50% 50%); */
     }
 }
 
-.circle-menu-item:nth-of-type(1) {
-    top: 5%;
-    right: 16vw;
-    background-image: url('../images/MenuIcons/COMBIWAY-41.png');    
+.circle-menu-item:nth-of-type(1) {    
+    transform: rotateZ(-24deg) translate(var(--menu-item-offset)) rotateZ(24deg);
 }
-.circle-menu-item:nth-of-type(1)::after {
+.circle-menu-item:nth-of-type(1) > .inactive-img {
+    background-image: url('../images/MenuIcons/COMBIWAY-41.png'); 
+}
+.circle-menu-item:nth-of-type(1) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-48.png');
 }
+
 .circle-menu-item:nth-of-type(2) {
-    top: 18%;
-    right: 13.5vw;
-    background-image: url('../images/MenuIcons/COMBIWAY-42.png');
+    transform: rotateZ(-16deg) translate(var(--menu-item-offset)) rotateZ(16deg);
 }
-.circle-menu-item:nth-of-type(2)::after {
+.circle-menu-item:nth-of-type(2) > .inactive-img {
+    background-image: url('../images/MenuIcons/COMBIWAY-42.png'); 
+}
+.circle-menu-item:nth-of-type(2) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-49.png');
 }
 
 .circle-menu-item:nth-of-type(3) {
-    top: 31%;
-    right: 12vw;
-    background-image: url('../images/MenuIcons/COMBIWAY-43.png');
+    transform: rotateZ(-8deg) translate(var(--menu-item-offset)) rotateZ(8deg);
 }
-.circle-menu-item:nth-of-type(3)::after {
+.circle-menu-item:nth-of-type(3) > .inactive-img {
+    background-image: url('../images/MenuIcons/COMBIWAY-43.png'); 
+}
+.circle-menu-item:nth-of-type(3) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-50.png');
 }
 
-.circle-menu-item:nth-of-type(4) {
-    top: 45%;
-    right: 11.5vw;
-    background-image: url('../images/MenuIcons/COMBIWAY-44.png');
+.circle-menu-item:nth-of-type(4) {        
+    transform: rotateZ(0deg) translate(var(--menu-item-offset)) rotateZ(0deg);
 }
-.circle-menu-item:nth-of-type(4)::after {
+.circle-menu-item:nth-of-type(4) > .inactive-img {
+    background-image: url('../images/MenuIcons/COMBIWAY-44.png'); 
+}
+.circle-menu-item:nth-of-type(4) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-51.png');
 }
 
 .circle-menu-item:nth-of-type(5) {
-    bottom: 31%;
-    right: 12vw;
-    background-image: url('../images/MenuIcons/COMBIWAY-45.png');   
+    transform: rotateZ(8deg) translate(var(--menu-item-offset)) rotateZ(-8deg);
 }
-.circle-menu-item:nth-of-type(5)::after {
+.circle-menu-item:nth-of-type(5) > .inactive-img {
+    background-image: url('../images/MenuIcons/COMBIWAY-45.png'); 
+}
+.circle-menu-item:nth-of-type(5) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-52.png');
 }
 
 .circle-menu-item:nth-of-type(6) {
-    bottom: 18%;
-    right: 13.5vw;
+    transform: rotate(16deg) translate(var(--menu-item-offset)) rotate(-16deg);
+}
+.circle-menu-item:nth-of-type(6) > .inactive-img {
     background-image: url('../images/MenuIcons/COMBIWAY-46.png'); 
 }
-.circle-menu-item:nth-of-type(6)::after {
+.circle-menu-item:nth-of-type(6) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-53.png');
 }
 
 .circle-menu-item:nth-of-type(7) {
-    bottom: 5%;
-    right: 16vw;
-    background-image: url('../images/MenuIcons/COMBIWAY-47.png');   
+    transform: rotateZ(24deg) translate(var(--menu-item-offset)) rotateZ(-24deg);
 }
-.circle-menu-item:nth-of-type(7)::after {
+.circle-menu-item:nth-of-type(7) > .inactive-img {
+    background-image: url('../images/MenuIcons/COMBIWAY-47.png'); 
+}
+.circle-menu-item:nth-of-type(7) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-54.png');
 }
 
@@ -346,15 +399,27 @@ a {
     width: 100%;
 }
 
-#first-background {
+/* #first-background {
     height: 100vh;
     background-image: url('../images/COMBIWAY-11.png')
     ,url('../images/COMBIWAY-10.png');
     background-repeat: no-repeat, no-repeat;
     background-size: cover, contain;
-    /* background-position-y: center, 40rem;  */
     background-position-y: center, bottom;       
+} */
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+
+    /* background-color: #b61924; */
+    /* background-image: url(""); */
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
+    /* background-position: 50% 50%; */
 }
+
 
 #second-background {
     position: absolute;
@@ -707,7 +772,9 @@ li::marker {
     opacity 1000ms 1000ms ease-in;
 }
 
-
+#money-wrapper {
+    position: relative;
+}
 /* #money-wrapper {
     position: absolute;
     width: 400px;
@@ -790,15 +857,14 @@ li::marker {
 #plus {
     position: absolute;
     cursor: pointer;
-    top: 153vh;
-    right: 27vw;
-    z-index: 10;
+    top: -1vh;
+    right: 0;    
 }
 
 .popup {
     position: absolute;
-    top: -10rem;
-    left: -13rem;
+    top: -20rem;
+    left: -20rem; 
     background-color: rgba(255, 255, 255, .5);
     border-radius: 10px;
     opacity: 0;
@@ -860,9 +926,9 @@ li::marker {
     left: 100%;
     top: 50%;
     border-radius: 50%;    
-    -webkit-transform: translate(32%, 32%);
-    -ms-transform: translate(32%, 32%);
-    transform: translate(32%, 32%);
+    -webkit-transform: translate(30%, 5%);
+    -ms-transform: translate(30%, 5%);
+    transform: translate(30%, 5%);
     opacity: 0.3;
 }
 
@@ -1147,7 +1213,6 @@ section:nth-of-type(5) > .token {
     #left-mountain {
         background-color: #1b1f36;
         border-bottom: 1px solid #2b6c87;
-        width: 60vw;
         height: 15vw;
         clip-path: polygon(0px 0px, 100% 100%, 0px 100%);
         position: absolute;
@@ -1200,14 +1265,6 @@ section:nth-of-type(5) > .token {
                             25% 70%,
                             62% 0px, 
                             100% 0px, 100% 100%, 0px 100%); */
-        clip-path: polygon(0px 0px, calc(60% + 10px) 0px, 0px 80%,
-                           0px 100%, 5% 100%,
-                           24% 66.5%, 34.25% 66.5%, 35% 65%, 25% 65%,
-                           37% 44%, 44% 44%, 44.5% 43%, 37.5% 43%,
-                           46.75% 27%, 52% 27%, 52.25% 26.5%, 47% 26.5%,
-                           53.75% 15%, 57.5% 15%, 57.75% 14.5%, 54% 14.5%,
-                           59.25% 5%, 61.5% 5%, 61.75% 4.5%, 59.5% 4.5%,
-                           62% 0px, 100% 0px, 100% 100%, 0px 100%);
         background: linear-gradient(to top, #1a1e35 20%, #2b3555);
         transform: none;
     }
@@ -1308,16 +1365,19 @@ section:nth-of-type(6) {
 section:nth-of-type(7) {
     background-image: url('../images/smartphoneOnTheWorld.png');
     background-repeat: no-repeat;
-    background-position: bottom;
-    /* background-size: contain; */
+    background-position: bottom;    
     background-size: 160%;
     background-position: 70% 70%
 }
 @media (min-width: 992px) {
     section:nth-of-type(7) {
        background-size: cover;
-    }
-    
+    }        
+}
+@media (min-width: 1400px) {
+    section:nth-of-type(7) {
+       background-size: contain;
+    }        
 }
 
 

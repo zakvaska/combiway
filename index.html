@@ -12,34 +12,43 @@
     <div id="token" class="d-none d-xl-block"></div>
     <div id="background-wrapper" class="d-none d-xl-block">
         <div id="first-background" class="container"></div>
+        <div id="particles-js"></div>
         <div id="second-background"></div>
         <div id="fourth-background" class="d-none"></div>
     </div>    
     <div id="scroll-spy-menu" class="d-none d-xl-flex">
-        <div class="circle-menu-item active-out"></div>
-        <div class="circle-menu-item active-out"></div>
-        <div class="circle-menu-item active-out"></div>
-        <div class="circle-menu-item active-out"></div>
-        <div class="circle-menu-item active-out"></div>
-        <div class="circle-menu-item active-out"></div>
-        <div class="circle-menu-item active-out"></div>
-    </div>
-    <div id="plus" class="d-none d-xl-block">
-        <div class="popup font-regular px-5 py-2">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+        <div id="inner-circle"></div>
+        <div id="outer-circle">
+            <div class="circle-menu-item">
+                <span class="inactive-img"></span>
+                <span class="active-img active-out"></span>
+            </div>
+            <div class="circle-menu-item">
+                <span class="inactive-img"></span>
+                <span class="active-img active-out"></span>
+            </div>
+            <div class="circle-menu-item">
+                <span class="inactive-img"></span>
+                <span class="active-img active-out"></span>
+            </div>
+            <div class="circle-menu-item">
+                <span class="inactive-img"></span>
+                <span class="active-img active-out"></span>
+            </div>
+            <div class="circle-menu-item">
+                <span class="inactive-img"></span>
+                <span class="active-img active-out"></span>
+            </div>
+            <div class="circle-menu-item">
+                <span class="inactive-img"></span>
+                <span class="active-img active-out"></span>
+            </div>
+            <div class="circle-menu-item">
+                <span class="inactive-img"></span>
+                <span class="active-img active-out"></span>
+            </div>
         </div>
-        <div class="wave">
-            <div class="expanding-circle"></div>
-            <div class="expanding-circle"></div>
-            <div class="expanding-circle"></div>
-            <!-- <div class="expanding-circle"></div>
-            <div class="expanding-circle"></div> -->
-        </div>
-        <div id="plus-body">
-            <span></span>
-            <span></span>
-        </div>                
-    </div>
+    </div>    
     <section class="container py-2 py-xl-5 vh-100 d-flex flex-column
      fs-4vmin fs-md-3vmin fs-lg-2vmin">        
         <div class="logo main-logo"></div>
@@ -105,9 +114,25 @@
                 CombiWay, зарабатывает на продаже автобусных и жд билетов. 
                 Все по настоящему, без мыльных обещаний. 
             </div>
-            <div id="money-wrapper" class="col-6 col-xl-2 font-bold text-light fs-2 text-center
-             h-25 h-xl-75 py-3 justify-content-xxl-start">
-                Hodlo iO
+            <div id="money-wrapper" class="col-6 col-xl-2 font-bold text-light fs-2 text-end
+             h-25 h-xl-75 py-3 justify-content-xxl-start text-uppercase">
+                Hodlo
+                <div id="plus" class="d-none d-xl-block">
+                    <div class="popup font-regular px-5 py-2">
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                    </div>
+                    <div class="wave">
+                        <div class="expanding-circle"></div>
+                        <div class="expanding-circle"></div>
+                        <div class="expanding-circle"></div>
+                        <!-- <div class="expanding-circle"></div>
+                        <div class="expanding-circle"></div> -->
+                    </div>
+                    <div id="plus-body">
+                        <span></span>
+                        <span></span>
+                    </div>                
+                </div>
                 <div class="bg-money h-75 h-xl-50 "></div>
             </div>
             <div id="money-description" class="col-6 col-xl-2 description font-regular
@@ -273,6 +298,7 @@
         </div>        
     </section>
     <script src="./js/jQuery-3.6.0.js"></script>
+    <script src="./js/particles.js"></script>
     <script src="./js/index.js"></script>
 </body>
 </html>

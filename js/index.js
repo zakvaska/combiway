@@ -22,28 +22,18 @@ const iconsNumber = 7;
 const $revolver = $('#scroll-spy-menu');
 const $token = $('#token');
 const $menuItems = $('.circle-menu-item');
-const imageNameTempl = 'COMBIWAY-';
 const $bus = $('#bus');
 const $people = $('#people');
 const $tokenInfo = $('#token-info');
-$menuItems.each(function(index, item) {
-	// console.log(index * windowHeight);
-	inactiveImage = $(item).css('background-image');
-	// console.log(prevImage);
-	
-	// console.log(prevImage.indexOf(imageNameTempl));
-	startPos = inactiveImage.indexOf(imageNameTempl) + imageNameTempl.length;
-	inactiveImageIndex = inactiveImage.substr(startPos, 2);
-	activeImageIndex = String(Number(inactiveImageIndex) + $menuItems.length); 
-	activeImage = inactiveImage.replace(inactiveImageIndex, activeImageIndex);
-	// console.log(prevImage.substr(startPos, 2));
-	$(item).data({
+$menuItems.each(function(index, item) {	
+	$(item).data({		
 		scrollPos: index * windowHeight,
-		inactiveImage: inactiveImage,
-		activeImage: activeImage
-	});		
-	// console.log($(item).data());		
-});	
+		inactiveImage: $(this).find('.inactive-img'),
+		activeImage: $(this).find('.active-img')
+	});
+		
+	console.log($(item).data());		
+});
 $token.data({
 	currentScale: 1,
 	scale0: 1,
@@ -72,10 +62,10 @@ const managePageSwitch = (animate) => {
 	// 		'opacity': 1
 	// 	}, 500);
 	// });
-	$currentItem = $menuItems.eq(currentPage);	
+	$currentItem = $menuItems.eq(currentPage);
 	if (animate) {
-		$prevItem.data('status', 'inactive').removeClass('active-in').addClass('active-out');
-		$currentItem.data('status', 'active').removeClass('active-out').addClass('active-in');
+		if ($prevItem.length > 0) $prevItem.data('status', 'inactive').data('activeImage').removeClass('active-in').addClass('active-out');		
+		$currentItem.data('status', 'active').data('activeImage').removeClass('active-out').addClass('active-in');
 		// $currentItem.data('status', 'active');
 		// .animate({
 		// 	'background-position-x': 100,
@@ -167,8 +157,11 @@ const rotateMenu = (from, to, animate) => {
 				// in the step-callback (that is fired each step of the animation),
 				// you can use the `now` paramter which contains the current
 				// animation-position (`0` up to `angle`)								
-				$revolver.css('transform', `rotateZ(${now}deg)`);
-				$menuItems.css('transform', `rotateZ(${now * (-1)}deg)`);
+				$revolver.css('transform', `rotateZ(${now}deg)`);								
+				$menuItems.each(function(index, item) {
+					$(item).data('inactiveImage').css('transform', `rotateZ(${now * (-1)}deg)`);
+					$(item).data('activeImage').css('transform', `rotateZ(${now * (-1)}deg)`);
+				});
 			},
 			complete: function() {
 				managePageSwitch(true);
@@ -181,7 +174,10 @@ const rotateMenu = (from, to, animate) => {
 		});	
 	} else {
 		$revolver.css('transform', `rotateZ(${to}deg)`);		
-		$menuItems.css('transform', `rotateZ(${to * (-1)}deg)`);
+		$menuItems.each(function(index, item) {
+			$(item).data('inactiveImage').css('transform', `rotateZ(${to * (-1)}deg)`);
+			$(item).data('activeImage').css('transform', `rotateZ(${to * (-1)}deg)`);
+		});
 	}
 };
 
@@ -232,24 +228,19 @@ $menuItems.on('click', function() {
 });
 
 $menuItems.on('mouseenter', function() {
-	// if ($(this).data('status') !== 'active') {
-		// $(this).fadeOut(100).css('background-image', $(this).data('activeImage')).fadeIn(100);
-		// $(this).css('background-image', $(this).data('activeImage'));		
-	// }	
-	if (!$(this).hasClass('active-in')) {	
-		$(this).toggleClass('active-out active-in');
-	}
+	if ($(this).data('status') !== 'active') {
+		$(this).data('activeImage').toggleClass('active-out active-in');
+	}	
 });
 
 $menuItems.on('mouseleave', function() {
-	// if ($(this)[0] !== $menuItems.eq(currentPage)[0]) {
-	if ($(this).data('status') !== 'active') {			
-	// 	$(this).css('background-image', $(this).data('inactiveImage'));
-	// }		
-		$(this).toggleClass('active-out active-in');
+	if ($(this).data('status') !== 'active') {				
+		$(this).data('activeImage').toggleClass('active-out active-in');
 	}	
 });
 
 $(function() {
 	if ($(window).width() >= 1200) manageScrollPos(true);			
 }); 
+
+particlesJS.load('particles-js', '../assets/particles.json');
