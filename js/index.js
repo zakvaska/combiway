@@ -44,6 +44,8 @@ $token.data({
 	left1: 610
 })
 
+// const $path = $('g[role="menuitem"]:nth-child(666) > path');
+// $path.css('fill', 'white');
 
 const managePageSwitch = (animate) => {	
 	let $prevItem, $currentItem;

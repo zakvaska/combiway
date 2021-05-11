@@ -32,12 +32,47 @@ body {
     /* height: 7000px;   */
     /* overflow: hidden;   */
     color: rgba(255, 255, 255, .75);
+    overflow-x: hidden;
 }
 
 canvas {
     display: block;
     vertical-align: bottom;
 }
+
+#pixel-map {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 15%) perspective(36px) rotateX(6deg) scale(.6, .25);
+    /* transform: translate(-50%, 20%) perspective(36px) rotateX(3deg) scale(1, .4); */
+}
+@media (min-width: 1400px) {
+    #pixel-map {
+        /* transform: translate(-50%, 25%) perspective(36px) rotateX(6deg) scale(.6, .25); */
+        /* transform: translate(-50%, 20%) perspective(36px) rotateX(3deg) scale(1, .4); */
+        /* transform: translate(-50%, 25%) perspective(36px) rotateX(3deg) scale(.8, .3); */
+        transform: translate(-50%, 25%) perspective(36px) rotateX(6deg) scale(.7, .25);
+    }
+}
+
+/* g[role="menuitem"]:nth-child(666) > path {
+    animation: pulse 3000ms ease infinite;
+}
+
+@keyframes pulse {
+    0% {
+        fill: #29294D;
+    }
+    50% {
+        fill: #29294D;
+    } 
+    51% {
+        fill: #46336f;
+    }
+    100% {
+        fill: #46336f;
+    }
+} */
 
 a {
     text-decoration: none;

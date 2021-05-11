@@ -1,0 +1,36 @@
+g[role="menuitem"]:nth-child(20n) > path {
+    animation: pulse 5000ms ease infinite;
+}
+/* g[role="menuitem"]:nth-child(20n + 1) > path {
+    animation: pulse 3000ms 100ms ease infinite;
+}
+g[role="menuitem"]:nth-child(20n + 2) > path {
+    animation: pulse 3000ms 200ms ease infinite;
+}
+g[role="menuitem"]:nth-child(20n + 3) > path {
+    animation: pulse 3000ms 300ms ease infinite;
+} */
+g[role="menuitem"]:nth-child(21n) > path {
+    animation: pulse 3000ms 100ms ease infinite;
+}
+g[role="menuitem"]:nth-child(22n) > path {
+    animation: pulse 2500ms 200ms ease infinite;
+}
+g[role="menuitem"]:nth-child(23n) > path {
+    animation: pulse 3500ms 300ms ease infinite;
+}
+
+@keyframes pulse {
+    0% {
+        fill: #29294D;
+    }
+    50% {
+        fill: #29294D;
+    } 
+    51% {
+        fill: #46336f;
+    }
+    100% {
+        fill: #46336f;
+    }
+}
