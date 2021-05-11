@@ -34,3 +34,15 @@ g[role="menuitem"]:nth-child(23n) > path {
         fill: #46336f;
     }
 }
+
+@keyframes pulse {
+    0% {
+        fill: #29294D;
+    }
+    50% {
+        fill: #46336f;
+    }
+    100% {
+        fill: #29294D;
+    }
+}
