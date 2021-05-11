@@ -6,13 +6,14 @@ let startPos = 0,
 	calculatedPage = 0,
 	scrollTop = 0,
 	scrollRatio = 0,
-	oldAngle = 24,
+	oldAngle = 0,	
 	currentAngle = 0,
 	newAngle = 0;
 let inactiveImage,
 	inactiveImageIndex,
 	activeImage,
 	activeImageIndex;
+const windowWidth = $(window).width();
 const windowHeight = $(window).height();
 //multiply by 2 because the last scroll does not have a corresponding icon
 const scrollHeight = $(document).height() - windowHeight * 2;			
@@ -20,6 +21,8 @@ const startAngle = 24;
 const fullRotationAngle = 48;
 const iconsNumber = 7;
 const $revolver = $('#scroll-spy-menu');
+// $revolver.css('transform', 'rotateZ(0deg)');
+// console.log($revolver.css('transform'));
 const $token = $('#token');
 const $menuItems = $('.circle-menu-item');
 const $bus = $('#bus');
@@ -48,6 +51,7 @@ $token.data({
 // $path.css('fill', 'white');
 
 const managePageSwitch = (animate) => {	
+	console.log('manage');
 	let $prevItem, $currentItem;
 	$prevItem = $menuItems.eq(prevPage);
 	
@@ -125,13 +129,32 @@ const managePageSwitch = (animate) => {
 	}
 };
 const rotateMenu = (from, to, animate) => {		
-	if (animate) {							
+	if (animate) {	
+		console.log('rotate anim');	
+
+		// $({offset: 0}).animate({offset: 92.5}, {
+		// 	duration: 1000,
+		// 	step: (now) => {
+		// 		$menuItems.each(function(index) {
+		// 			// console.log($(this).css('transform'));						${now + 10} * windiwHeight
+		// 			let angle = (index * 8) - 24;
+		// 			$(this).css('transform', `rotateZ(${angle}deg) translate(calc( ${now}vh +  calc(( 15vw -  calc( 15vw - ( 112.5vh -  92.5vh))) / 2) / 2)) rotateZ(${angle * (-1)}deg)`);
+		// 		})
+		// 	}
+		// });
+		$revolver.animate({
+			opacity: 1					
+			}, {
+			duration: 1000, //* scrollRatio								
+		});
 		// we use a pseudo object for the animation
-		// (starts from `0` to `angle`), you can name it as you want		
-		$({deg: from}).animate({deg: to}, {
-			duration: 2000 * scrollRatio,
-			// delay: 1000,
-			// easing: 'ease-in-out',
+		// (starts from `0` to `angle`), you can name it as you want				
+		$({deg: from}).delay(1000).animate({deg: to}, {
+			// duration: 2000 * scrollRatio,
+			duration: 2000,	
+			// easing: 'easeInOutElastic',
+			easing: 'easeInOutQuint',
+			// easing: 'easeInOutBack',
 			step: function(now) {
 				// in the step-callback (that is fired each step of the animation),
 				// you can use the `now` paramter which contains the current
@@ -144,13 +167,14 @@ const rotateMenu = (from, to, animate) => {
 			},
 			complete: function() {
 				managePageSwitch(true);
+				$(document).on('scroll', function() {
+					console.log('scroll');		
+					manageScrollPos(false);
+				});
 			}
-		});									
-		$revolver.animate({
-			opacity: 1					
-			}, {
-			duration: 2000 //* scrollRatio					
 		});	
+		
+			
 	} else {
 		$revolver.css('transform', `rotateZ(${to}deg)`);		
 		$menuItems.each(function(index, item) {
@@ -187,18 +211,13 @@ const manageScrollPos = (initialLoad, animateIconSwitch) => {
 	// 	managePageSwitch(true);
 	// }
 	if (calculatedPage !== currentPage) {
-		if (!initialLoad) prevPage = currentPage;
+		// if (!initialLoad) prevPage = currentPage;
+		prevPage = currentPage;
 		currentPage = calculatedPage;
 		// console.log('switch');
-		managePageSwitch(true);
+		if (!initialLoad) managePageSwitch(true);
 	}
 };
-
-if ($(window).width() > 1200) {
-	$(document).on('scroll', function() {		
-		manageScrollPos(false);
-	});
-}
 
 
 $menuItems.on('click', function() {
@@ -219,6 +238,8 @@ $menuItems.on('mouseleave', function() {
 });
 
 $(function() {
+	// oldAngle = getAngle(scrollTop);
+	// $revolver.css('transform', `rotateZ(${oldAngle})`);
 	if ($(window).width() >= 1200) manageScrollPos(true);			
 }); 
 

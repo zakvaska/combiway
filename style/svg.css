@@ -40,7 +40,8 @@ g[role="menuitem"]:nth-child(23n) > path {
         fill: #29294D;
     }
     50% {
-        fill: #46336f;
+        /* fill: #46336f; */
+        fill: #4F3E83
     }
     100% {
         fill: #29294D;
