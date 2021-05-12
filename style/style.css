@@ -392,9 +392,11 @@ a {
 
 .circle-menu-item:nth-of-type(1) {    
     transform: rotateZ(-24deg) translate(var(--menu-item-offset)) rotateZ(24deg);
+    animation: slide-out1 1000ms ease;
 }
 .circle-menu-item:nth-of-type(1).active {
     transform: rotateZ(-24deg) translate(var(--menu-item-offset)) rotateZ(24deg) scale(1.2);
+    /* animation-name: grow; */
 }
 .circle-menu-item:nth-of-type(1) > .inactive-img {
     background-image: url('../images/MenuIcons/COMBIWAY-41.png'); 
@@ -402,9 +404,19 @@ a {
 .circle-menu-item:nth-of-type(1) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-48.png');
 }
+@keyframes slide-out1 {
+    0% {
+        transform: rotateZ(-24deg) translate(0) rotateZ(24deg);
+    }
+    100% {
+        transform: rotateZ(-24deg) translate(var(--menu-item-offset)) rotateZ(24deg);
+    }
+}
+
 
 .circle-menu-item:nth-of-type(2) {
     transform: rotateZ(-16deg) translate(var(--menu-item-offset)) rotateZ(16deg);
+    animation: slide-out2 1000ms ease;
 }
 .circle-menu-item:nth-of-type(2).active {
     transform: rotateZ(-16deg) translate(var(--menu-item-offset)) rotateZ(16deg) scale(1.2);
@@ -415,9 +427,18 @@ a {
 .circle-menu-item:nth-of-type(2) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-49.png');
 }
+@keyframes slide-out2 {
+    0% {
+        transform: rotateZ(-16deg) translate(0) rotateZ(16deg);
+    }
+    100% {
+        transform: rotateZ(-16deg) translate(var(--menu-item-offset)) rotateZ(16deg);
+    }
+}
 
 .circle-menu-item:nth-of-type(3) {
     transform: rotateZ(-8deg) translate(var(--menu-item-offset)) rotateZ(8deg);
+    animation: slide-out3 1000ms ease;
 }
 .circle-menu-item:nth-of-type(3).active {
     transform: rotateZ(-8deg) translate(var(--menu-item-offset)) rotateZ(8deg) scale(1.2);
@@ -428,9 +449,18 @@ a {
 .circle-menu-item:nth-of-type(3) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-50.png');
 }
+@keyframes slide-out3 {
+    0% {
+        transform: rotateZ(-8deg) translate(0) rotateZ(8deg);
+    }
+    100% {
+        transform: rotateZ(-8deg) translate(var(--menu-item-offset)) rotateZ(8deg);
+    }
+}
 
 .circle-menu-item:nth-of-type(4) {        
     transform: rotateZ(0deg) translate(var(--menu-item-offset)) rotateZ(0deg);
+    animation: slide-out4 1000ms ease;
 }
 .circle-menu-item:nth-of-type(4).active {
     transform: rotateZ(0deg) translate(var(--menu-item-offset)) rotateZ(0deg) scale(1.2);
@@ -441,9 +471,18 @@ a {
 .circle-menu-item:nth-of-type(4) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-51.png');
 }
+@keyframes slide-out4 {
+    0% {
+        transform: rotateZ(0deg) translate(0) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(0deg) translate(var(--menu-item-offset)) rotateZ(0deg);
+    }
+}
 
 .circle-menu-item:nth-of-type(5) {
     transform: rotateZ(8deg) translate(var(--menu-item-offset)) rotateZ(-8deg);
+    animation: slide-out5 1000ms ease;
 }
 .circle-menu-item:nth-of-type(5).active {
     transform: rotateZ(8deg) translate(var(--menu-item-offset)) rotateZ(-8deg) scale(1.2);
@@ -454,9 +493,18 @@ a {
 .circle-menu-item:nth-of-type(5) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-52.png');
 }
+@keyframes slide-out5 {
+    0% {
+        transform: rotateZ(8deg) translate(0) rotateZ(-8deg);
+    }
+    100% {
+        transform: rotateZ(8deg) translate(var(--menu-item-offset)) rotateZ(-8deg);
+    }
+}
 
 .circle-menu-item:nth-of-type(6) {
     transform: rotate(16deg) translate(var(--menu-item-offset)) rotate(-16deg);
+    animation: slide-out6 1000ms ease;
 }
 .circle-menu-item:nth-of-type(6).active {
     transform: rotateZ(16deg) translate(var(--menu-item-offset)) rotateZ(-16deg) scale(1.2);
@@ -467,9 +515,18 @@ a {
 .circle-menu-item:nth-of-type(6) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-53.png');
 }
+@keyframes slide-out6 {
+    0% {
+        transform: rotateZ(16deg) translate(0) rotateZ(-16deg);
+    }
+    100% {
+        transform: rotateZ(16deg) translate(var(--menu-item-offset)) rotateZ(-16deg);
+    }
+}
 
 .circle-menu-item:nth-of-type(7) {
     transform: rotateZ(24deg) translate(var(--menu-item-offset)) rotateZ(-24deg);
+    animation: slide-out7 1000ms ease;
 }
 .circle-menu-item:nth-of-type(7).active {
     transform: rotateZ(24deg) translate(var(--menu-item-offset)) rotateZ(-24deg) scale(1.2);
@@ -479,6 +536,14 @@ a {
 }
 .circle-menu-item:nth-of-type(7) > .active-img {
     background-image: url('../images/MenuIcons/COMBIWAY-54.png');
+}
+@keyframes slide-out7 {
+    0% {
+        transform: rotateZ(24deg) translate(0) rotateZ(-24deg);
+    }
+    100% {
+        transform: rotateZ(24deg) translate(var(--menu-item-offset)) rotateZ(-24deg);
+    }
 }
 
 
