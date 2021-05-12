@@ -33,6 +33,12 @@ body {
     /* overflow: hidden;   */
     color: rgba(255, 255, 255, .75);
     overflow-x: hidden;
+    
+}
+@media (min-width: 1200px) {
+    body {
+        overflow-y: hidden;
+    }
 }
 
 canvas {

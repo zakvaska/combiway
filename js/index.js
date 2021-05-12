@@ -149,13 +149,16 @@ const rotateMenu = (from, to, animate) => {
 			duration: 1000, //* scrollRatio								
 		});
 		// we use a pseudo object for the animation
-		// (starts from `0` to `angle`), you can name it as you want				
+		// (starts from `0` to `angle`), you can name it as you want
+		console.log(2000 * (Math.abs(to) / startAngle));				
 		$({deg: from}).delay(1000).animate({deg: to}, {
-			// duration: 2000 * scrollRatio,
-			duration: 2000,	
+			//animation duration depends on the difference between initial 
+			//position (0deg => 500ms) and position when animation ends (24deg => 2000ms)
+			duration: 1500 * (Math.abs(to) / startAngle) + 500,
+			// duration: 2000,	
 			// easing: 'easeInOutElastic',
-			easing: 'easeInOutQuint',
-			// easing: 'easeInOutBack',
+			// easing: 'easeInOutQuint',
+			easing: 'easeInOutBack',
 			start: () => {
 				$menuItems
 				// .delay(10000)
@@ -179,6 +182,7 @@ const rotateMenu = (from, to, animate) => {
 					console.log('scroll');		
 					manageScrollPos(false);
 				});
+				$(document.body).css('overflow-y', 'scroll');
 			}
 		});	
 		
