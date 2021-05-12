@@ -141,7 +141,8 @@ const rotateMenu = (from, to, animate) => {
 		// 			$(this).css('transform', `rotateZ(${angle}deg) translate(calc( ${now}vh +  calc(( 15vw -  calc( 15vw - ( 112.5vh -  92.5vh))) / 2) / 2)) rotateZ(${angle * (-1)}deg)`);
 		// 		})
 		// 	}
-		// });
+		// });		
+		
 		$revolver.animate({
 			opacity: 1					
 			}, {
@@ -155,6 +156,13 @@ const rotateMenu = (from, to, animate) => {
 			// easing: 'easeInOutElastic',
 			easing: 'easeInOutQuint',
 			// easing: 'easeInOutBack',
+			start: () => {
+				$menuItems
+				// .delay(10000)
+				.each(function() {
+					$(this).data('activeImage').removeClass('active').addClass('active-out');
+				});
+			},
 			step: function(now) {
 				// in the step-callback (that is fired each step of the animation),
 				// you can use the `now` paramter which contains the current

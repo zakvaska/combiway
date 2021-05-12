@@ -365,6 +365,10 @@ a {
     animation-name: out-circle-right;
 }
 
+.circle-menu-item > .active-img.active {
+    clip-path: circle(100% at 50% 50%);
+}
+
 @keyframes in-circle-right {
     0% {
         clip-path: circle(0 at 0 50%);
