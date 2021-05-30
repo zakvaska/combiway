@@ -2,13 +2,15 @@
 let i = 0;
 let startPos = 0,
 	currentPage = 0,
-	prevPage = -100,
+	prevPage = 0,
 	calculatedPage = 0,
 	scrollTop = 0,
 	scrollRatio = 0,
-	oldAngle = 0,	
+	initialAngle = 0,	
 	currentAngle = 0,
-	newAngle = 0;
+	newAngle = 0,
+	initialLoad = true,
+	currentScroll = 0;
 let inactiveImage,
 	inactiveImageIndex,
 	activeImage,
@@ -16,8 +18,9 @@ let inactiveImage,
 const windowWidth = $(window).width();
 const windowHeight = $(window).height();
 //multiply by 2 because the last scroll does not have a corresponding icon
-const scrollHeight = $(document).height() - windowHeight * 2;			
-const startAngle = 24;
+const scrollHeight = $(document).height() - windowHeight * 2;
+const anglePitch = 8;
+const maxAngleOffset = 24;
 const fullRotationAngle = 48;
 const iconsNumber = 7;
 const $revolver = $('#scroll-spy-menu');
@@ -28,14 +31,17 @@ const $menuItems = $('.circle-menu-item');
 const $bus = $('#bus');
 const $people = $('#people');
 const $tokenInfo = $('#token-info');
+const $fullPage = $('#full-page');
 $menuItems.each(function(index, item) {	
 	$(item).data({		
-		scrollPos: index * windowHeight,
+		index: index,
+		scrollPos: index * windowHeight,		
+		angle: (index * anglePitch - maxAngleOffset) * (-1),
 		inactiveImage: $(this).find('.inactive-img'),
 		activeImage: $(this).find('.active-img')
 	});
 		
-	console.log($(item).data());		
+	// console.log($(item).data());		
 });
 $token.data({
 	currentScale: 1,
@@ -47,24 +53,58 @@ $token.data({
 	left1: 610
 })
 
+let scroll = true;
+let options = {
+	root: null,
+	rootMargin: '0px',
+	threshold: 0.5
+};
+// const options = {};
+
+const manageIntersection = (entries, observer) => {
+	// console.log('intersection');
+	entries.forEach(entry => {
+		
+		if (entry.isIntersecting && scroll === true) {
+			console.log(entry);
+			// manageScrollPos($(entry.target).data('index'));
+			const index = $(entry.target).data('index');	
+			
+
+			goToSection($menuItems.eq(index), false);
+			currentScroll = $menuItems.eq(index).data('scrollPos') * (-1);
+			$fullPage.addClass('active');
+		}
+	});
+};
+
+const observer = new IntersectionObserver(manageIntersection, options);
+
+const sections = document.querySelectorAll('section');
+
 // const $path = $('g[role="menuitem"]:nth-child(666) > path');
 // $path.css('fill', 'white');
 
-const managePageSwitch = (animate) => {	
+const managePageSwitch = (animate, prevPage, page) => {	
+	console.log(prevPage, page);
 	console.log('manage');
 	let $prevItem, $currentItem;
-	$prevItem = $menuItems.eq(prevPage);
+	$prevItem = $menuItems.eq(prevPage);	
+	$currentItem = $menuItems.eq(page);
+	// console.log($prevItem);
+	// console.log($currentItem);
+	// console.log(currentPage);
 	
-	$currentItem = $menuItems.eq(currentPage);
 	if (animate) {
-		if ($prevItem.length > 0) $prevItem.removeClass('active').data('status', 'inactive')
+		if ($prevItem.length > 0) $prevItem.removeClass('active')
 								// .css('transform', $prevItem.css('transform').replace(' scale(1.2)', ''))
 								.data('activeImage').removeClass('active-in').addClass('active-out');		
 		// $currentItem.css('transform', $currentItem.css('transform').concat(' scale(1.2)'))
-		if ($currentItem.length > 0) $currentItem.addClass('active').data('status', 'active').data('activeImage').removeClass('active-out').addClass('active-in');
+		if ($currentItem.length > 0) $currentItem.addClass('active').data('activeImage').removeClass('active-out').addClass('active-in');
 	} else {
 		$currentItem.css('background-image', $currentItem.data('activeImage'));			
 	}
+	
 	// console.log(currentPage);
 	if (currentPage === 0) {
 		$token.css('z-index', '0');
@@ -76,7 +116,7 @@ const managePageSwitch = (animate) => {
 			// step: function(now) {
 				
 			// }
-		} 
+			} 
 		);
 		// $({scale: $token.data('scale1')}).animate({
 		$({scale: $token.data('currentScale')}).animate({
@@ -128,64 +168,170 @@ const managePageSwitch = (animate) => {
 		// $bus.removeClass('arriving-bus').addClass('departing-bus');
 	}
 };
-const rotateMenu = (from, to, animate) => {		
+
+const scrollTo = (to) => {
+	
+	$.when(
+		$({pos: currentScroll}).animate({pos: to}, {		
+						
+			step: function(now) {
+				// console.log(now);
+				// console.log($fullPage);
+				$fullPage.css('transform', `translateY(${now}px)`);
+			},		
+			
+			easing: 'easeInOutSine',
+			delay: 0,
+			duration: 750,
+			done: function() {
+				// manageScrollPos(false);
+				console.log('scroll complete');
+				currentScroll = to;
+	
+							
+			},
+			fail: function() {
+				console.log('fail');
+			}
+		})
+		.promise().done(function() {
+			console.log('promise done');
+		})
+		).done(function() {
+			console.log('when done');
+		});
+}
+
+const goToSection = (menuItem, animate) => {	
+	console.log(menuItem);
+	// console.log(prevPage);
+	let to = menuItem.data('scrollPos') * (-1);
+	
+	if (animate === undefined) {
+		scrollTo(to);
+	} else {
+		$fullPage.css('transform', `translateY(${to}px)`);
+	}
+	
+
+	manageScrollPos(menuItem.data('index'));
+	
+};
+
+const handleScroll = (event) => {	
+					
+	console.log('scroll');
+	let nextPage, newScrollPos;
+	if (Math.sign(event.originalEvent.deltaY) === 1) {
+		// goToSection($menuItems.eq(currentPage + 1));
+		nextPage = currentPage + 1;							
+	} else {
+		// goToSection($menuItems.eq(currentPage - 1));
+		nextPage = currentPage - 1;						
+	}
+	
+	// 7 icons + 1 last page without icon
+	if (nextPage >= 0 && nextPage <= iconsNumber) {
+		newScrollPos = (nextPage) * windowHeight * (-1);
+		scrollTo(newScrollPos);
+		manageScrollPos(nextPage);
+	}								
+};
+
+const debouncedScrollHandler = debounce(handleScroll, 1000, {
+	leading: true,
+	trailing: false,
+	'maxWait': 1000
+});
+
+
+const rotateMenu = (from, to, animate, initial, prevPage, page) => {	
+	console.log(prevPage);	
+	console.log(page);
 	if (animate) {	
 		console.log('rotate anim');	
-
-		// $({offset: 0}).animate({offset: 92.5}, {
-		// 	duration: 1000,
-		// 	step: (now) => {
-		// 		$menuItems.each(function(index) {
-		// 			// console.log($(this).css('transform'));						${now + 10} * windiwHeight
-		// 			let angle = (index * 8) - 24;
-		// 			$(this).css('transform', `rotateZ(${angle}deg) translate(calc( ${now}vh +  calc(( 15vw -  calc( 15vw - ( 112.5vh -  92.5vh))) / 2) / 2)) rotateZ(${angle * (-1)}deg)`);
-		// 		})
-		// 	}
-		// });		
 		
-		$revolver.animate({
-			opacity: 1					
-			}, {
-			duration: 1000, //* scrollRatio								
-		});
-		// we use a pseudo object for the animation
-		// (starts from `0` to `angle`), you can name it as you want
-		console.log(2000 * (Math.abs(to) / startAngle));				
-		$({deg: from}).delay(1000).animate({deg: to}, {
-			//animation duration depends on the difference between initial 
-			//position (0deg => 500ms) and position when animation ends (24deg => 2000ms)
-			duration: 1500 * (Math.abs(to) / startAngle) + 500,
-			// duration: 2000,	
-			// easing: 'easeInOutElastic',
-			// easing: 'easeInOutQuint',
-			easing: 'easeInOutBack',
-			start: () => {
-				$menuItems
-				// .delay(10000)
-				.each(function() {
-					$(this).data('activeImage').removeClass('active').addClass('active-out');
-				});
-			},
-			step: function(now) {
-				// in the step-callback (that is fired each step of the animation),
-				// you can use the `now` paramter which contains the current
-				// animation-position (`0` up to `angle`)								
-				$revolver.css('transform', `rotateZ(${now}deg)`);								
-				$menuItems.each(function(index, item) {
-					$(item).data('inactiveImage').css('transform', `rotateZ(${now * (-1)}deg)`);
-					$(item).data('activeImage').css('transform', `rotateZ(${now * (-1)}deg)`);
-				});
-			},
-			complete: function() {
-				managePageSwitch(true);
-				$(document).on('scroll', function() {
-					console.log('scroll');		
-					manageScrollPos(false);
-				});
-				$(document.body).css('overflow-y', 'scroll');
-			}
-		});	
-		
+		if (initial) {
+			
+			$revolver.animate({
+				opacity: 1					
+				}, {
+				duration: 1000, //* scrollRatio								
+			});
+			// we use a pseudo object for the animation
+			// (starts from `0` to `angle`), you can name it as you want						
+			$({deg: from}).delay(1000).animate({deg: to}, {
+				//animation duration depends on the difference between initial 
+				//position (0deg => 500ms) and position when animation ends (24deg => 2000ms)
+				duration: 1500 * (Math.abs(to) / maxAngleOffset) + 500,
+				// duration: 2000,	
+				// easing: 'easeInOutElastic',
+				// easing: 'easeInOutQuint',
+				easing: 'easeInOutBack',
+				start: () => {
+					$menuItems
+					// .delay(10000)
+					.each(function() {
+						$(this).data('activeImage').removeClass('active').addClass('active-out');
+					});
+				},
+				step: function(now) {
+					// in the step-callback (that is fired each step of the animation),
+					// you can use the `now` paramter which contains the current
+					// animation-position (`0` up to `angle`)								
+					$revolver.css('transform', `rotateZ(${now}deg)`);								
+					$menuItems.each(function(index, item) {
+						$(item).data('inactiveImage').css('transform', `rotateZ(${now * (-1)}deg)`);
+						$(item).data('activeImage').css('transform', `rotateZ(${now * (-1)}deg)`);
+					});
+				},
+				complete: function() {
+					managePageSwitch(true, prevPage, page);		
+					$menuItems.on('click', function() {												
+						goToSection($(this));
+						
+					});
+					
+					$fullPage.on('mousewheel', debouncedScrollHandler);
+					// $(document.body).css('overflow-y', 'scroll');
+					currentAngle = to;					
+				}
+			});	
+		} else {
+			currentAngle = to;
+			// $revolver.queue('fx', []);
+			console.log(from, to);
+			$({deg: from}).animate({deg: to}, {
+				//animation duration depends on the difference between initial 
+				//position (0deg => 500ms) and position when animation ends (24deg => 2000ms)
+				// duration: 1500 * (Math.abs(to - from) / fullRotationAngle) + 500,
+				duration: 750,	
+				// easing: 'easeInOutElastic',
+				easing: 'easeInOutQuint',
+				// easing: 'easeInOutBounce',
+				start: () => {
+					$menuItems
+					// .delay(10000)
+					.each(function() {
+						$(this).data('activeImage').removeClass('active').addClass('active-out');
+					});
+				},
+				step: function(now) {
+					// in the step-callback (that is fired each step of the animation),
+					// you can use the `now` paramter which contains the current
+					// animation-position (`0` up to `angle`)								
+					$revolver.css('transform', `rotateZ(${now}deg)`);								
+					$menuItems.each(function(index, item) {
+						$(item).data('inactiveImage').css('transform', `rotateZ(${now * (-1)}deg)`);
+						$(item).data('activeImage').css('transform', `rotateZ(${now * (-1)}deg)`);
+					});
+				},
+				complete: function() {
+					console.log(prevPage, page);
+					managePageSwitch(true, prevPage, page);												
+				}
+			});
+		}				
 			
 	} else {
 		$revolver.css('transform', `rotateZ(${to}deg)`);		
@@ -196,63 +342,62 @@ const rotateMenu = (from, to, animate) => {
 	}
 };
 
-const getAngle = (scrollTop) => {
-			
-	// console.log(windowHeight);				
-	scrollRatio = (scrollTop / scrollHeight);
+const getAngle = (page) => {
+	// 0 -> 24deg
+	// 3 -> 0deg
+	// 6 -> -24deg
+	return ((page * (-anglePitch)) + maxAngleOffset);
 	
-	// let prev = prevPage;
-	// let current = currentPage;
-	
-	// `0scroll   -> 24deg`
-	// `0.5scroll -> 0deg`
-	// `1 scroll  -> -24deg`		
-	return fullRotationAngle * scrollRatio * (-1) + startAngle;
 };
 
-const manageScrollPos = (initialLoad, animateIconSwitch) => {
-	scrollTop = $(window).scrollTop();
-	newAngle = getAngle(scrollTop);
-	rotateMenu(oldAngle, newAngle, initialLoad);	
-	// 0...docHeight * 0.5 - 1 -> 0
-	// docHeight * 0.5...docHeight * 1.5 - 1 -> 1
-	// docHeight * 1.5...docHeight * 2.5 - 1 -> 2
-	calculatedPage = Math.round(scrollTop / windowHeight);
-
-	// if (initialLoad && calculatedPage === currentPage) {
-	// 	managePageSwitch(true);
-	// }
-	if (calculatedPage !== currentPage) {
-		// if (!initialLoad) prevPage = currentPage;
+const manageScrollPos = (page) => {
+	console.log(page);
+	if (initialLoad) {		
+		initialLoad = false;
+		currentPage = page;
+		newAngle = getAngle(page);
 		prevPage = currentPage;
-		currentPage = calculatedPage;
-		// console.log('switch');
-		if (!initialLoad) managePageSwitch(true);
-	}
+		rotateMenu(initialAngle, newAngle, true, true, prevPage, page);
+		sections.forEach((section, index) => {
+			observer.unobserve(section);
+			$(section).data('index', index);
+		});
+		console.log(prevPage, currentPage);
+	} else {
+		console.log(currentPage, page);
+		
+		prevPage = currentPage;
+		var prev = prevPage;
+		currentPage = page;
+
+		rotateMenu(currentAngle, $menuItems.eq(page).data('angle'), true, false, prev, page);
+				
+	}		
 };
 
-
-$menuItems.on('click', function() {
-	
-	$(window).scrollTop($(this).data('scrollPos'));
-});
 
 $menuItems.on('mouseenter', function() {
-	if ($(this).data('status') !== 'active') {
+	if (!$(this).hasClass('active')) {
 		$(this).data('activeImage').toggleClass('active-out active-in');
 	}	
 });
 
 $menuItems.on('mouseleave', function() {
-	if ($(this).data('status') !== 'active') {				
+	if (!$(this).hasClass('active')) {				
 		$(this).data('activeImage').toggleClass('active-out active-in');
 	}	
 });
 
-$(function() {
-	// oldAngle = getAngle(scrollTop);
-	// $revolver.css('transform', `rotateZ(${oldAngle})`);
-	if ($(window).width() >= 1200) manageScrollPos(true);			
+$(function() {	
+	// window.scrollTo(0);
+	document.location = "#";
+
+	sections.forEach((section, index) => {
+		observer.observe(section);
+		$(section).data('index', index);
+	});
+	
+	// if ($(window).width() >= 1200) manageScrollPos($(entry.target).data('index'));
 }); 
 
 // particlesJS.load('particles-js', '../assets/particles.json');
