@@ -61,6 +61,8 @@ let options = {
 };
 // const options = {};
 
+const lethargy = new Lethargy();
+
 const manageIntersection = (entries, observer) => {
 	// console.log('intersection');
 	entries.forEach(entry => {
@@ -292,7 +294,15 @@ const rotateMenu = (from, to, animate, initial, prevPage, page) => {
 						
 					});
 					
-					$fullPage.on('mousewheel', debouncedScrollHandler);
+					// $fullPage.on('mousewheel', debouncedScrollHandler);
+					$(window).bind('mousewheel DOMMouseScroll wheel MozMousePixelScroll', function(e){
+						e.preventDefault()
+						e.stopPropagation();
+						if(lethargy.check(e) !== false) {
+							debouncedScrollHandler();
+						}
+					});
+					
 					// $(document.body).css('overflow-y', 'scroll');
 					currentAngle = to;					
 				}
