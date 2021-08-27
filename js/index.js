@@ -184,7 +184,7 @@ const scrollTo = (to) => {
 			
 			easing: 'easeInOutSine',
 			delay: 0,
-			duration: 750,
+			duration: 1500,
 			done: function() {
 				// manageScrollPos(false);
 				console.log('scroll complete');
@@ -240,10 +240,10 @@ const handleScroll = (event) => {
 	}								
 };
 
-const debouncedScrollHandler = debounce(handleScroll, 1000, {
+const debouncedScrollHandler = debounce(handleScroll, 1500, {
 	leading: true,
 	trailing: false,
-	'maxWait': 1000
+	'maxWait': 2000
 });
 
 
@@ -258,7 +258,7 @@ const rotateMenu = (from, to, animate, initial, prevPage, page) => {
 			$revolver.animate({
 				opacity: 1					
 				}, {
-				duration: 1000, //* scrollRatio								
+				duration: 1500, //* scrollRatio								
 			});
 			// we use a pseudo object for the animation
 			// (starts from `0` to `angle`), you can name it as you want						
@@ -294,14 +294,19 @@ const rotateMenu = (from, to, animate, initial, prevPage, page) => {
 						
 					});
 					
-					// $fullPage.on('mousewheel', debouncedScrollHandler);
-					$(window).bind('mousewheel DOMMouseScroll wheel MozMousePixelScroll', function(e){
-						e.preventDefault()
-						e.stopPropagation();
-						if(lethargy.check(e) !== false) {
-							debouncedScrollHandler(e);
-						}
-					});
+					$fullPage.on('mousewheel', debouncedScrollHandler);
+					// $fullPage.on('mousewheel', function(e) {
+					// 	console.log('touchscroll');
+					// 	console.log(e);
+					// });
+					// $(window).bind('mousewheel DOMMouseScroll wheel MozMousePixelScroll', function(e){
+					// 	e.preventDefault();
+					// 	e.stopPropagation();
+					// 	if(lethargy.check(e) !== false) {
+					// 		// debouncedScrollHandler(e);
+					// 		handleScroll(e);
+					// 	}
+					// });
 					
 					// $(document.body).css('overflow-y', 'scroll');
 					currentAngle = to;					
@@ -315,7 +320,7 @@ const rotateMenu = (from, to, animate, initial, prevPage, page) => {
 				//animation duration depends on the difference between initial 
 				//position (0deg => 500ms) and position when animation ends (24deg => 2000ms)
 				// duration: 1500 * (Math.abs(to - from) / fullRotationAngle) + 500,
-				duration: 750,	
+				duration: 1500,	
 				// easing: 'easeInOutElastic',
 				easing: 'easeInOutQuint',
 				// easing: 'easeInOutBounce',
